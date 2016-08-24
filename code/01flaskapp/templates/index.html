@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
 <script type="text/javascript">
-  $(function() {
+  $(  function() {
+{#       setInterval(submit_form,1000);#}
     var submit_form = function(e) {
       $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
         a: $('input[name="a"]').val(),
@@ -34,13 +35,56 @@
      }
     })
 </script>
+
+<script>
+    var polling = function(){
+    $.post('/polling', function(data, textStatus){
+        $("poll").append(data+"<br>");
+
+      $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
+        a: $('input[name="a"]').val(),
+        b: $('input[name="b"]').val(),
+        now: new Date().getTime()
+      }, function(data) {
+        $('#result').text(data.result);
+        $('input[name=a]').focus().select();
+      });
+ 
+     });
+    };
+    interval = setInterval(polling, 1000);
+</script>
+
+<script>
+var data = {
+      data: JSON.stringify({
+                        "value":'asdf'
+                    })
+   }
+};
+
+$.ajax({
+   url:"/",
+   type: 'POST',
+   data: data,
+   success: function(msg){
+              alert(msg);
+            }
+})
+</script>
+
+
 <p>
   <input type="text" size="5" name="a"> +
   <input type="text" size="5" name="b"> =
   <span id="result">?</span>
 <p><a href=# id="calculate">calculate server side</a>
-<br>
+    <br>
     <a href=# id="date">   server side</a>
+    <br>
+    <a href=# id="uptext">  {{ get_flashed_messages()[0] }} </a>
+    <br>
+{#    <span id="result">?</span>#}
 
 
 {% endblock %}
