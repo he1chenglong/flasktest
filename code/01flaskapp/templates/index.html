@@ -35,14 +35,13 @@
     })
 </script>
 
-<script>
+<script >
     var polling = function(){
        $.post('/polling', function(data, textStatus){
           
               $.getJSON($SCRIPT_ROOT + '/polling', {
                 now: new Date().getTime()
               }, function(data) {
-                $('#result').text(data.result);
                 $('#result').text(data.result);
               });
  
@@ -51,25 +50,27 @@
     interval = setInterval(polling, 1000);
 </script>
 
-<script>
-var postjson = function(){
+<script type="text/javascript">
+  $(  function() {
+var postjson = function(e){
     var data = {
           data: JSON.stringify({
                             "value":'asdf'
                         })
        }
-    };
 
-    $.ajax({
-       url:"/postjson",
-       type: 'POST',
-       data: data,
-       success: function(msg){
-                  alert(msg);
-                }
-    })
-};
-$('a#uptext').bind('click', submit_form);
+        $.ajax({
+           url:"/postjson",
+           type: 'POST',
+           data: data,
+           success: function(msg){
+                     $('#result').text(msg.result);
+                      alert(msg);
+                    }
+        })
+    };
+    $('a#uptext').bind('click', postjson);
+  });
 </script>
 
 

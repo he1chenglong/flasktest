@@ -39,15 +39,15 @@ def get_data():
     print str(ss)
     return str(ss)
 
-@app.route("/postjson", methods=['POST'])
+@app.route("/postjson", methods=['POST','GET'])
 def getpostjson_data():
     print 'call postjson'
     data = json.loads(request.form.get('data'))
     ss = data['value']
     print str(ss)
-    return str(ss)
+    return 'ok'
 
-@app.route("/polling",methods=['POST','GET'])
+@app.route("/polling12",methods=['POST','GET'])
 def polldata():
     print 'call polldata...'
     data = request.form.get('data')
