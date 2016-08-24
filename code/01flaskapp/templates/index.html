@@ -2,7 +2,6 @@
 {% block body %}
 <script type="text/javascript">
   $(  function() {
-{#       setInterval(submit_form,1000);#}
     var submit_form = function(e) {
       $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
         a: $('input[name="a"]').val(),
@@ -38,39 +37,39 @@
 
 <script>
     var polling = function(){
-    $.post('/polling', function(data, textStatus){
-        $("poll").append(data+"<br>");
-
-      $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
-        a: $('input[name="a"]').val(),
-        b: $('input[name="b"]').val(),
-        now: new Date().getTime()
-      }, function(data) {
-        $('#result').text(data.result);
-        $('input[name=a]').focus().select();
-      });
+       $.post('/polling', function(data, textStatus){
+          
+              $.getJSON($SCRIPT_ROOT + '/polling', {
+                now: new Date().getTime()
+              }, function(data) {
+                $('#result').text(data.result);
+                $('#result').text(data.result);
+              });
  
-     });
+         });
     };
     interval = setInterval(polling, 1000);
 </script>
 
 <script>
-var data = {
-      data: JSON.stringify({
-                        "value":'asdf'
-                    })
-   }
-};
+var postjson = function(){
+    var data = {
+          data: JSON.stringify({
+                            "value":'asdf'
+                        })
+       }
+    };
 
-$.ajax({
-   url:"/",
-   type: 'POST',
-   data: data,
-   success: function(msg){
-              alert(msg);
-            }
-})
+    $.ajax({
+       url:"/postjson",
+       type: 'POST',
+       data: data,
+       success: function(msg){
+                  alert(msg);
+                }
+    })
+};
+$('a#uptext').bind('click', submit_form);
 </script>
 
 

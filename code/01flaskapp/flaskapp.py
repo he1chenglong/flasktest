@@ -23,11 +23,7 @@ def add_numbers():
     """Add two numbers server side, ridiculous but well..."""
     a = request.args.get('a', 0, type=int)
     b = request.args.get('b', 0, type=int)
-    # return jsonify(result=a + b)
-    randomnum=random.randint(1,100)
-    return  jsonify(result=randomnum)
-
-
+    return jsonify(result=a + b)
 
 @app.route('/')
 def index():
@@ -43,13 +39,21 @@ def get_data():
     print str(ss)
     return str(ss)
 
-@app.route("/polling",methods=['POST'])
+@app.route("/postjson", methods=['POST'])
+def getpostjson_data():
+    print 'call postjson'
+    data = json.loads(request.form.get('data'))
+    ss = data['value']
+    print str(ss)
+    return str(ss)
+
+@app.route("/polling",methods=['POST','GET'])
 def polldata():
     print 'call polldata...'
     data = request.form.get('data')
     # ss = data['value']
     # print str(ss)
-    randomnum=1
+    randomnum=random.randint(1,100)
     return  jsonify(result=randomnum)
 
 def randomthread(no, interval):
