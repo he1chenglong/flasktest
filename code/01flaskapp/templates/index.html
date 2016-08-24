@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
+
+{#    前后端  数据通信#}
 <script type="text/javascript">
   $(  function() {
     var submit_form = function(e) {
@@ -25,6 +27,8 @@
     $('input[name=a]').focus();
   });
 </script>
+
+{#    局部刷新例子，显示时间#}
 <h1>jQuery Example</h1>
 <script>
     $(function(){
@@ -35,27 +39,31 @@
     })
 </script>
 
+{#    轮询后端数据#}
 <script >
     var polling = function(){
        $.post('/polling', function(data, textStatus){
-          
+{#          读取后端返回的数据#}
               $.getJSON($SCRIPT_ROOT + '/polling', {
                 now: new Date().getTime()
               }, function(data) {
-                $('#result').text(data.result);
+{#                  显示后端返回的数据#}
+                $('#dataresult').text(data.result);
               });
  
          });
     };
+{#    设置轮询的时间间隔#}
     interval = setInterval(polling, 1000);
 </script>
 
+{#    给后端传递json数据#}
 <script type="text/javascript">
   $(  function() {
 var postjson = function(e){
     var data = {
           data: JSON.stringify({
-                            "value":'asdf'
+                            "value": $('input[name="a"]').val()
                         })
        }
 
@@ -64,7 +72,7 @@ var postjson = function(e){
            type: 'POST',
            data: data,
            success: function(msg){
-                     $('#result').text(msg.result);
+                     $('#msgresult').text(msg);
                       alert(msg);
                     }
         })
@@ -73,7 +81,7 @@ var postjson = function(e){
   });
 </script>
 
-
+{#页面显示部分#}
 <p>
   <input type="text" size="5" name="a"> +
   <input type="text" size="5" name="b"> =
@@ -84,7 +92,9 @@ var postjson = function(e){
     <br>
     <a href=# id="uptext">  {{ get_flashed_messages()[0] }} </a>
     <br>
-{#    <span id="result">?</span>#}
+    <span id="dataresult">?</span>
+    <br>
+    <span id="msgresult">?</span>
 
 
 {% endblock %}

@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+#qpy:webapp:<app >
+#qpy:fullscreen
+#qpy://l27.0.0.1:5050/
 """
     jQuery Example
     ~~~~~~~~~~~~~~
@@ -45,14 +48,12 @@ def getpostjson_data():
     data = json.loads(request.form.get('data'))
     ss = data['value']
     print str(ss)
-    return 'ok'
+    return str(ss)
 
-@app.route("/polling12",methods=['POST','GET'])
+@app.route("/polling",methods=['POST','GET'])
 def polldata():
     print 'call polldata...'
     data = request.form.get('data')
-    # ss = data['value']
-    # print str(ss)
     randomnum=random.randint(1,100)
     return  jsonify(result=randomnum)
 
@@ -68,4 +69,5 @@ if __name__ == '__main__':
     # t.start()
     # # t.join()
 
-    app.run(threaded=True)
+    # app.run(threaded=True)
+    app.run(port=5050)
